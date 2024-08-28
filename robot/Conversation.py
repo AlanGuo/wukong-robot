@@ -362,7 +362,8 @@ class Conversation(object):
                 if "```" in line.strip():
                     skip_tts = True
                 if not skip_tts:
-                    audio = self._tts_line(line.strip(), cache, index, onCompleted)
+                    plain_line = utils.markdown_to_text(line.strip())
+                    audio = self._tts_line(plain_line, cache, index, onCompleted)
                     if audio:
                         self.tts_count += 1
                         audios.append(audio)
@@ -396,9 +397,11 @@ class Conversation(object):
             return
 
         logger.info(f"即将朗读语音：{msg}")
-        lines = re.split("。|！|？|\!|\?|\n", msg)
+        # remove markdown
+        plain_msg = utils.markdown_to_text(msg)
+        lines = re.split("。|！|？|\!|\?|\n", plain_msg)
         if onCompleted is None:
-            onCompleted = lambda: self._onCompleted(msg)
+            onCompleted = lambda: self._onCompleted(plain_msg)
         self.tts_index = 0
         self.tts_count = len(lines)
         logger.debug(f"tts_count: {self.tts_count}")

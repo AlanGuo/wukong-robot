@@ -15,6 +15,9 @@ from robot import logging
 from pydub import AudioSegment
 from pytz import timezone
 import _thread as thread
+from bs4 import BeautifulSoup
+from markdown import markdown
+import re
 
 import smtplib
 from email.mime.text import MIMEText
@@ -334,3 +337,19 @@ def stripPunctuation(s):
     if any(s.endswith(p) for p in punctuations):
         s = s[:-1]
     return s
+
+def markdown_to_text(markdown_string):
+    """ Converts a markdown string to plaintext """
+
+    # md -> html -> text since BeautifulSoup can extract text cleanly
+    html = markdown(markdown_string)
+
+    # remove code snippets
+    html = re.sub(r'<pre>(.*?)</pre>', ' ', html)
+    html = re.sub(r'<code>(.*?)</code >', ' ', html)
+
+    # extract text
+    soup = BeautifulSoup(html, "html.parser")
+    text = ''.join(soup.findAll(text=True))
+
+    return text
