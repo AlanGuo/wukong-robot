@@ -253,12 +253,14 @@ class OPENAIRobot(AbstractRobot):
         super(self.__class__, self).__init__()
         self.openai = None
         try:
-            import openai
-
-            self.openai = openai
+            from openai import OpenAI
             if not openai_api_key:
                 openai_api_key = os.getenv("OPENAI_API_KEY")
             self.openai.api_key = openai_api_key
+            self.openai = OpenAI(
+                # This is the default and can be omitted
+                api_key=openai_api_key,
+            )
             if proxy:
                 logger.info(f"{self.SLUG} 使用代理：{proxy}")
                 self.openai.proxy = proxy
@@ -384,7 +386,7 @@ class OPENAIRobot(AbstractRobot):
             respond = ""
             self.context.append({"role": "user", "content": msg})
             if self.provider == "openai":
-                response = self.openai.Completion.create(
+                response = self.openai.chat.completions.create(
                     model=self.model,
                     messages=self.context,
                     temperature=self.temperature,
