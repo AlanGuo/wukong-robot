@@ -242,6 +242,7 @@ class OPENAIRobot(AbstractRobot):
         frequency_penalty,
         presence_penalty,
         stop_ai,
+        prompt="",
         prefix="",
         proxy="",
         api_base="",
@@ -268,6 +269,7 @@ class OPENAIRobot(AbstractRobot):
             logger.critical("OpenAI 初始化失败，请升级 Python 版本至 > 3.6")
         self.model = model
         self.prefix = prefix
+        self.prompt = prompt
         self.provider = provider
         self.api_version = api_version
         self.temperature = temperature
@@ -278,6 +280,8 @@ class OPENAIRobot(AbstractRobot):
         self.stop_ai = stop_ai
         self.api_base = api_base if api_base else "https://api.openai.com/v1/chat"
         self.context = []
+        if self.prompt:
+            self.context.append({"role": "system", "content": self.prompt})
 
     @classmethod
     def get_config(cls):
