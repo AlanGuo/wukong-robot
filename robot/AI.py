@@ -256,7 +256,6 @@ class OPENAIRobot(AbstractRobot):
             from openai import OpenAI
             if not openai_api_key:
                 openai_api_key = os.getenv("OPENAI_API_KEY")
-            self.openai.api_key = openai_api_key
             self.openai = OpenAI(
                 # This is the default and can be omitted
                 api_key=openai_api_key,
@@ -266,7 +265,6 @@ class OPENAIRobot(AbstractRobot):
                 self.openai.proxy = proxy
             else:
                 self.openai.proxy = None
-
         except Exception:
             logger.critical("OpenAI 初始化失败，请升级 Python 版本至 > 3.6")
         self.model = model
