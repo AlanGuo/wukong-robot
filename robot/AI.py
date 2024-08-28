@@ -385,7 +385,7 @@ class OPENAIRobot(AbstractRobot):
         try:
             respond = ""
             self.context.append({"role": "user", "content": msg})
-            logger.info(f"context：{self.context}", self.context)
+            logger.info(f"context：{self.context}")
             if self.provider == "openai":
                 response = self.openai.chat.completions.create(
                     model=self.model,
