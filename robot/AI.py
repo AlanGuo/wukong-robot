@@ -229,6 +229,7 @@ class AnyQRobot(AbstractRobot):
 class OPENAIRobot(AbstractRobot):
 
     SLUG = "openai"
+    STREAM = False
 
     def __init__(
         self,
@@ -242,6 +243,7 @@ class OPENAIRobot(AbstractRobot):
         frequency_penalty,
         presence_penalty,
         stop_ai,
+        stream,
         prompt="",
         prefix="",
         proxy="",
@@ -277,6 +279,7 @@ class OPENAIRobot(AbstractRobot):
         self.frequency_penalty = frequency_penalty
         self.presence_penalty = presence_penalty
         self.stop_ai = stop_ai
+        self.STREAM = stream
         self.api_base = api_base if api_base else "https://api.openai.com/v1/chat"
         self.context = []
         if self.prompt:

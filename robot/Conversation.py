@@ -165,7 +165,7 @@ class Conversation(object):
                 self.player.stop()
             else:
                 # 没命中技能，使用机器人回复
-                if self.ai.SLUG == "":
+                if self.ai.STREAM:
                     stream = self.ai.stream_chat(query)
                     self.stream_say(stream, True, onCompleted=self.checkRestore)
                 else:

@@ -288,6 +288,8 @@ openai:
     api_version: '2023-05-15' # 如果是openai的，留空就行，azure的需填写对应的api_version，参考官方文档
     # 参数指定将生成文本的模型类型。目前支持 gpt-3.5-turbo 和 gpt-3.5-turbo-0301 两种选择
     model: 'gpt-3.5-turbo'
+    # 如果需要流式返回，设置为 True
+    stream: False
     # 提示词
     prompt: '你是一个智能问答机器人，你可以回答用户的问题。'
     # 在前面加的一段前缀
