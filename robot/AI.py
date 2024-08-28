@@ -256,13 +256,14 @@ class OPENAIRobot(AbstractRobot):
             from openai import OpenAI
             if not openai_api_key:
                 openai_api_key = os.getenv("OPENAI_API_KEY")
-            if proxy:
-                logger.info(f"{self.SLUG} 使用代理：{proxy}")
+            
             self.openai = OpenAI(
                 # This is the default and can be omitted
-                api_key = openai_api_key,
-                proxy = proxy
+                api_key = openai_api_key
             )
+            if proxy:
+                logger.info(f"{self.SLUG} 使用代理：{proxy}")
+                self.openai.proxy = proxy
         except Exception as e:
             logger.critical("OpenAI 初始化失败: %s", repr(e))
         self.model = model
