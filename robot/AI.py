@@ -391,8 +391,7 @@ class OPENAIRobot(AbstractRobot):
                     top_p=self.top_p,
                     frequency_penalty=self.frequency_penalty,
                     presence_penalty=self.presence_penalty,
-                    stop=self.stop_ai,
-                    api_base=self.api_base
+                    stop=self.stop_ai
                 )
             else:
                 from openai import AzureOpenAI
